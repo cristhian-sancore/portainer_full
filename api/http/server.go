@@ -140,7 +140,7 @@ func (server *Server) Start(ctx context.Context) error {
 	authHandler.KubernetesTokenCacheManager = kubernetesTokenCacheManager
 	authHandler.OAuthService = server.OAuthService
 
-	adminMonitor := adminmonitor.New(5*time.Minute, server.DataStore)
+	adminMonitor := adminmonitor.New(24*time.Hour, server.DataStore)
 	adminMonitor.Start(ctx)
 
 	var backupHandler = backup.NewHandler(
