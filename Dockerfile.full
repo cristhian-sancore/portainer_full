@@ -1,0 +1,37 @@
+# Stage 1: Frontend Build
+FROM node:22-bullseye AS frontend-builder
+RUN corepack enable && corepack prepare pnpm@10.26.2 --activate
+WORKDIR /src
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --no-frozen-lockfile
+COPY app ./app
+COPY webpack ./webpack
+COPY webpack.config.js tsconfig.json babel.config.js postcss.config.js tailwind.config.js ./
+COPY .env.defaults* ./
+RUN pnpm run build
+
+# Stage 2: Backend Build
+FROM golang:1.24-bullseye AS backend-builder
+WORKDIR /src
+COPY go.mod go.sum ./
+# Use GOTOOLCHAIN=auto so Go downloads the required toolchain version
+ENV GOTOOLCHAIN=auto
+RUN go mod download
+COPY api ./api
+COPY pkg ./pkg
+RUN CGO_ENABLED=0 go build \
+    -trimpath \
+    -ldflags "-s -w -X 'github.com/portainer/portainer/pkg/build.GitCommit=local-test'" \
+    -o portainer \
+    ./api/cmd/portainer/
+
+# Stage 3: Final Image
+FROM portainer/base
+WORKDIR /
+COPY --from=frontend-builder /src/dist/public /public
+COPY mustache-templates /mustache-templates
+COPY --from=backend-builder /src/portainer /portainer
+
+VOLUME /data
+EXPOSE 9000 9443 8000
+ENTRYPOINT ["/portainer"]
