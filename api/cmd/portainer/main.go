@@ -167,7 +167,7 @@ func checkDBSchemaServerVersionMatch(dbStore dataservices.DataStore, serverVersi
 		return false
 	}
 
-	return v.SchemaVersion == serverVersion && v.Edition == serverEdition
+	return v.SchemaVersion == serverVersion
 }
 
 func initKubernetesDeployer(kubernetesTokenCacheManager *kubeproxy.TokenCacheManager, kubernetesClientFactory *kubecli.ClientFactory, dataStore dataservices.DataStore, reverseTunnelService portainer.ReverseTunnelService, signatureService portainer.DigitalSignatureService, proxyManager *proxy.Manager) portainer.KubernetesDeployer {
