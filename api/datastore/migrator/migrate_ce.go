@@ -93,11 +93,9 @@ func (m *Migrator) NeedsMigration() bool {
 	// If the version matches, then it's all down to the number of migration funcs we have for the current version
 	// i.e. the MigratorCount
 
-	// In this particular instance we should log a fatal error
+	// Allow any edition to pass migration check
 	if m.CurrentDBEdition() != portainer.PortainerCE {
-		log.Fatal().Msg("the Portainer database is set for Portainer Business Edition, please follow the instructions in our documentation to downgrade it: https://docs.portainer.io/faqs/upgrading/can-i-downgrade-from-portainer-business-to-portainer-ce")
-
-		return false
+		log.Info().Msg("Portainer Business Edition database detected, allowing migration to continue for unlocked mode.")
 	}
 
 	if m.CurrentSemanticDBVersion().LessThan(semver.MustParse(portainer.APIVersion)) {

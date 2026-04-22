@@ -34,6 +34,7 @@ import (
 	"github.com/portainer/portainer/api/http/handler/hostmanagement/openamt"
 	kubehandler "github.com/portainer/portainer/api/http/handler/kubernetes"
 	"github.com/portainer/portainer/api/http/handler/ldap"
+	"github.com/portainer/portainer/api/http/handler/licenses"
 	"github.com/portainer/portainer/api/http/handler/motd"
 	"github.com/portainer/portainer/api/http/handler/registries"
 	"github.com/portainer/portainer/api/http/handler/resourcecontrols"
@@ -276,6 +277,8 @@ func (server *Server) Start(ctx context.Context) error {
 		server.PlatformService,
 		server.UpgradeService)
 
+	var licensesHandler = licenses.NewHandler(requestBouncer)
+
 	var templatesHandler = templates.NewHandler(requestBouncer)
 	templatesHandler.DataStore = server.DataStore
 	templatesHandler.FileService = server.FileService
@@ -317,6 +320,7 @@ func (server *Server) Start(ctx context.Context) error {
 		GitOperationHandler:    gitOperationHandler,
 		FileHandler:            fileHandler,
 		LDAPHandler:            ldapHandler,
+		LicensesHandler:        licensesHandler,
 		HelmTemplatesHandler:   helmTemplatesHandler,
 		KubernetesHandler:      kubernetesHandler,
 		MOTDHandler:            motdHandler,

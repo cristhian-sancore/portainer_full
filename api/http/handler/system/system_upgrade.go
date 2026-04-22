@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"regexp"
 
-	ceplf "github.com/portainer/portainer/api/platform"
+	portainer "github.com/portainer/portainer/api"
 	httperror "github.com/portainer/portainer/pkg/libhttp/error"
 	"github.com/portainer/portainer/pkg/libhttp/request"
 	"github.com/portainer/portainer/pkg/libhttp/response"
@@ -48,6 +48,12 @@ func (handler *Handler) systemUpgrade(w http.ResponseWriter, r *http.Request) *h
 		return httperror.BadRequest("Invalid license format. Must start with a digit and a dash (e.g. 3-xxxx)", nil)
 	}
 
-	// Bypass actual upgrade and return success
+	// Bypass actual upgrade: persist EE edition in the database
+	version, err := handler.dataStore.Version().Version()
+	if err == nil {
+		version.Edition = int(portainer.PortainerEE)
+		_ = handler.dataStore.Version().UpdateVersion(version)
+	}
+
 	return response.Empty(w)
 }
