@@ -98,7 +98,7 @@ func (store *Store) CheckCurrentEdition() error {
 }
 
 func (store *Store) edition() portainer.SoftwareEdition {
-	return portainer.PortainerBE
+	return portainer.PortainerEE
 }
 
 // TODO: move the use of this to dataservices.IsErrObjectNotFound()?

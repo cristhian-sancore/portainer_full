@@ -1269,7 +1269,9 @@ type (
 		// Server Instance ID
 		InstanceID string `example:"299ab403-70a8-4c05-92f7-bf7a994d50df"`
 		// Portainer edition
-		Edition SoftwareEdition `json:"Edition" example:"2"`
+		Edition SoftwareEdition `json:"Edition" example:"3"`
+		// Whether Portainer has a valid license
+		ValidLicense bool `json:"ValidLicense" example:"true"`
 	}
 
 	// Tag represents a tag that can be associated to a resource
@@ -2009,7 +2011,19 @@ const (
 )
 
 // List of supported features
-var SupportedFeatureFlags = []featureflags.Feature{"hsts", "csp"}
+var SupportedFeatureFlags = []featureflags.Feature{
+	"hsts",
+	"csp",
+	"rbac",
+	"registry-management",
+	"activity-logs",
+	"external-auth-sync",
+	"hide-internal-endpoints",
+	"k8s-resource-pools-quotas",
+	"k8s-show-all-namespaces",
+	"edge-stack-schedule",
+	"gpu-management",
+}
 
 const (
 	_ AuthenticationMethod = iota

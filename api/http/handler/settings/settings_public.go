@@ -80,7 +80,7 @@ func generatePublicSettings(appSettings *portainer.Settings) *publicSettingsResp
 		KubeconfigExpiry:          appSettings.KubeconfigExpiry,
 		Features:                  make(map[featureflags.Feature]bool),
 		IsAMTEnabled:              appSettings.EnableEdgeComputeFeatures && appSettings.OpenAMTConfiguration.Enabled,
-		Edition:                   portainer.PortainerBE,
+		Edition:                   portainer.PortainerEE,
 	}
 
 	for k := range featureflags.FeatureFlags() {
