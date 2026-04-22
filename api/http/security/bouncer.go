@@ -477,7 +477,7 @@ func MWSecureHeaders(next http.Handler, hsts, csp bool) http.Handler {
 		}
 
 		if csp {
-			w.Header().Set("Content-Security-Policy", "script-src 'self' https://js.hsforms.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; object-src 'none'; frame-ancestors 'none'; frame-src https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/")
+			w.Header().Set("Content-Security-Policy", "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.hsforms.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; object-src 'none'; frame-ancestors 'none'; frame-src https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'")
 		}
 
 		w.Header().Set("X-Content-Type-Options", "nosniff")
