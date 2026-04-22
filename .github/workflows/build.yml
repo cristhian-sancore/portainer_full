@@ -39,7 +39,6 @@ jobs:
 
       - name: Build Portainer (All)
         run: |
-          pnpm config set frozen-lockfile false
           make all
         env:
           PLATFORM: linux

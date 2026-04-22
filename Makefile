@@ -40,7 +40,7 @@ server-deps: init-dist ## Download dependant server binaries
 	@./build/download_binaries.sh $(PLATFORM) $(ARCH)
 
 client-deps: ## Install client dependencies
-	pnpm install
+	pnpm install --no-frozen-lockfile
 
 tidy: ## Tidy up the go.mod file
 	@go mod tidy
