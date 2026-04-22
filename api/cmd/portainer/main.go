@@ -489,10 +489,6 @@ func buildServer(flags *portainer.CLIFlags, shutdownCtx context.Context, shutdow
 		adminPasswordHash = *flags.AdminPassword
 	}
 
-	if adminPasswordHash == "" {
-		adminPasswordHash, _ = cryptoService.Hash("portainer123")
-	}
-
 	if adminPasswordHash != "" {
 		users, err := dataStore.User().UsersByRole(portainer.AdministratorRole)
 		if err != nil {
