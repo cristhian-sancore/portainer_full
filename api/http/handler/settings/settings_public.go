@@ -47,6 +47,7 @@ type publicSettingsResponse struct {
 	}
 
 	IsDockerDesktopExtension bool `json:"IsDockerDesktopExtension" example:"false"`
+	Edition                  portainer.SoftwareEdition
 }
 
 // @id SettingsPublic
@@ -77,8 +78,13 @@ func generatePublicSettings(appSettings *portainer.Settings) *publicSettingsResp
 		EnableEdgeComputeFeatures: appSettings.EnableEdgeComputeFeatures,
 		GlobalDeploymentOptions:   appSettings.GlobalDeploymentOptions,
 		KubeconfigExpiry:          appSettings.KubeconfigExpiry,
-		Features:                  featureflags.FeatureFlags(),
+		Features:                  make(map[featureflags.Feature]bool),
 		IsAMTEnabled:              appSettings.EnableEdgeComputeFeatures && appSettings.OpenAMTConfiguration.Enabled,
+		Edition:                   portainer.PortainerBE,
+	}
+
+	for k := range featureflags.FeatureFlags() {
+		publicSettings.Features[k] = true
 	}
 
 	publicSettings.Edge.PingInterval = appSettings.Edge.PingInterval

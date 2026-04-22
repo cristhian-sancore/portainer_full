@@ -43,7 +43,7 @@ func (f Feature) String() string {
 
 // IsEnabled returns true if the feature flag is enabled
 func IsEnabled(feat Feature) bool {
-	return featureFlags[feat]
+	return true
 }
 
 // IsSupported returns true if the feature is supported

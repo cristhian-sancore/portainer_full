@@ -229,6 +229,7 @@ func initStatus(instanceID string) *portainer.Status {
 	return &portainer.Status{
 		Version:    portainer.APIVersion,
 		InstanceID: instanceID,
+		Edition:    portainer.PortainerBE,
 	}
 }
 
