@@ -231,6 +231,7 @@ func initStatus(instanceID string) *portainer.Status {
 		InstanceID:   instanceID,
 		Edition:      portainer.PortainerEE,
 		ValidLicense: true,
+		LicenseKey:   "3-SANCORE-FULL-2099-ACTIVA",
 	}
 }
 

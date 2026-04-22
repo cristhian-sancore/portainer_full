@@ -1272,6 +1272,8 @@ type (
 		Edition SoftwareEdition `json:"Edition" example:"3"`
 		// Whether Portainer has a valid license
 		ValidLicense bool `json:"ValidLicense" example:"true"`
+		// The license key
+		LicenseKey string `json:"LicenseKey" example:"3-SANCORE-FULL"`
 	}
 
 	// Tag represents a tag that can be associated to a resource

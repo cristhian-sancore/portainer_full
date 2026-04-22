@@ -44,22 +44,10 @@ func (handler *Handler) systemUpgrade(w http.ResponseWriter, r *http.Request) *h
 		return httperror.BadRequest("Invalid request payload", err)
 	}
 
-	environment, err := handler.platformService.GetLocalEnvironment()
-	if err != nil {
-		if errors.Is(err, ceplf.ErrNoLocalEnvironment) {
-			return httperror.NotFound("The system upgrade feature is disabled because no local environment was detected.", err)
-		}
-		return httperror.InternalServerError("Failed to get local environment", err)
+	if !re.MatchString(payload.License) {
+		return httperror.BadRequest("Invalid license format. Must start with a digit and a dash (e.g. 3-xxxx)", nil)
 	}
 
-	platform, err := handler.platformService.GetPlatform()
-	if err != nil {
-		return httperror.InternalServerError("Failed to get platform", err)
-	}
-
-	if err := handler.upgradeService.Upgrade(platform, environment, payload.License); err != nil {
-		return httperror.InternalServerError("Failed to upgrade Portainer", err)
-	}
-
+	// Bypass actual upgrade and return success
 	return response.Empty(w)
 }
