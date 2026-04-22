@@ -61,7 +61,7 @@ jobs:
           file: build/linux/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/cristhian-sancore/portainerfull:latest
+            ghcr.io/cristhian-sancore/portainerfull:${{ github.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
